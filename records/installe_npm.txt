@@ -1,0 +1,54 @@
+npm install redux react-redux - התקנת סטור
+npm install @reduxjs/toolkit - כלים לסטור
+
+npm install nodemon - הרצת פרוייקט
+
+
+---------------------------------------------------------------
+שמירת ערכים טפשים
+npm install dotenv --save
+
+
+---------------------------------------------------------------
+קבצים
+npm install axios file-saver
+
+---------------------------------------------------------------
+
+עיצוב
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install @mui/lab
+npm install @mui/material @mui/styles
+npm install stylis stylis-plugin-rtl
+
+
+npm install bootstrap
+להוסיף ל html הראשי
+<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+או לייבא
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+לעיצוב טעינת עמוד
+npm install react-awesome-loaders
+
+להוסיף sass לפרוייקט
+npm install sass --save-dev
+
+והקונפיגורציה ל sass
+
+
+
+---------------------------------------------------------------
+
+נתב ראוטר
+npm install react-router-dom
+npm install react-swipeable-views
+
+
+npm install axios
+
+
+
+
+
