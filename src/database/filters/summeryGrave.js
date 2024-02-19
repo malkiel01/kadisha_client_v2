@@ -29,21 +29,21 @@ const useQuerySummery = () => {
 
                 return {
                         exemption : [
-                                { type: 0, label: 'פנויים',value: freeByGraveExempt },
+                                { type: 0, label: process.env.NAME_SUMMERY_FREE_HEB ,value: freeByGraveExempt },
                                 { type: 0, label: 'רכישות',value: purchasesByGraveExempt },
                                 { type: 0, label: 'שמורים',value: reservedByGraveExempt },
                                 { type: 0, label: 'קבורים',value: burialsByGraveExempt },
                                 { type: 1, label: 'סה"כ',value: freeByGraveExempt + purchasesByGraveExempt + reservedByGraveExempt + burialsByGraveExempt },        
                         ],
                         closed : [
-                                { type: 0, label: 'פנויים',value: freeByGraveClosed },
+                                { type: 0, label: process.env.NAME_SUMMERY_FREE_HEB ,value: freeByGraveClosed },
                                 { type: 0, label: 'רכישות',value: purchasesByGraveClosed },
                                 { type: 0, label: 'שמורים',value: reservedByGraveClosed },
                                 { type: 0, label: 'קבורים',value: burialsByGraveClosed },
                                 { type: 1, label: 'סה"כ',value: freeByGraveClosed + purchasesByGraveClosed + reservedByGraveClosed + burialsByGraveClosed },        
                         ],
                         unusual : [
-                                { type: 0, label: 'פנויים',value: freeByGraveUnusual },
+                                { type: 0, label: process.env.NAME_SUMMERY_FREE_HEB ,value: freeByGraveUnusual },
                                 { type: 0, label: 'רכישות',value: purchasesByGraveUnusual },
                                 { type: 0, label: 'שמורים',value: reservedByGraveUnusual },
                                 { type: 0, label: 'קבורים',value: burialsByGraveUnusual },
