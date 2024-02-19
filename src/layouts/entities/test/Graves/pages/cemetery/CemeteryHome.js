@@ -26,10 +26,6 @@ const CemeteryHome = () => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(dataCemeteries)
-  // }, [])
-
   return (
     <>
       {selected ?

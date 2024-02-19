@@ -24,7 +24,7 @@ const NotFoundLayouts = () => {
     return (
       <div className={classes.imageContainer}>
         <img className={classes.responsiveImage} 
-        src="http://localhost:3000//SiteUnderConstruction2.jpeg" alt="תיאור תמונה" />
+        src={`http://172.31.94.135:3000//SiteUnderConstruction2.jpeg`} alt="תיאור תמונה" />
       </div>
     )
 }
