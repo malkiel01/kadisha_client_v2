@@ -115,41 +115,11 @@ export const checkToken = async (token, setToken) => {
             localStorage.setItem('token', '')
             localStorage.setItem('permission', 'null')
           }
-          // if (!response.data.success) {
-          //   setToken('')
-          //   localStorage.setItem('token', '')
-          //   localStorage.setItem('permission', 'null')
-          // }
       })
       .catch((err) => {
           console.log(err.response)
       })
   }
-
-
-
-
-
-
-    // if (token !== '') {
-    //     try {
-    //         // אפשר להשתמש ב axios בכדי לשלוח את שם המשתמש והסיסמה לשרת
-    //         const response = await axios.post(`http://localhost:3001/connection/check_token`, { 
-    //           token
-    //          })
-      
-    //         // אם השרת אישר את הכניסה, נכניס את המשתמש לאזור האישי
-    //         if (response.data.success) {
-    //           // כאן תוכל להשתמש בניווט לדף הרלוונטי
-    //           if (response.data.timer) {
-    //             alert('עוד 5 דקות תתנתק')
-    //           }} else {
-    //           alert('התנתקת מהמערכת');
-    //         }
-    //       } catch (error) {
-    //         alert('שגיאה בבקשה לשרת. אנא נסה שוב מאוחר יותר.');
-    //       }
-    // }
 }
 
 

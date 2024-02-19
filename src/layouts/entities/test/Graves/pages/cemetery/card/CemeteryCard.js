@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -6,15 +6,11 @@ import { Grid } from '@material-ui/core';
 import CemeteryDiv from './CemeteryDiv';
 
 
-const CemeteryCard = ({ cemetery }) => {
 
-  const items = [
-    { type: 0, label: 'פנויים', value: 3 },
-    { type: 0, label: 'רכישות', value: 28 },
-    { type: 0, label: 'שמורים', value: 32 },
-    { type: 0, label: 'קבורים', value: 33 },
-    { type: 1, label: 'סה"כ', value: 96 },
-  ];
+const CemeteryCard = ({ item, data, summaries = [] }) => {
+  useEffect(() => {
+    console.log(summaries);
+  }, []);
 
   const textStyle = {
     display: 'flex',
@@ -31,46 +27,57 @@ const CemeteryCard = ({ cemetery }) => {
   return (
     <Card sx={{ minWidth: 275, marginTop: 2, marginBottom: 2 }}>
       <CardContent>
-        <Typography variant="h5" component="div">
-           {cemetery?.cemeteryNameHe} ({cemetery?.cemeteryNameEn})
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          קוד ביטוח לאומי: {cemetery?.nationalInsuranceCode || '----'}
+        <Grid container xs={12}>
+          <Typography variant="h5" component="div">
+            {item?.cemeteryNameHe} ({item?.cemeteryNameEn})
+          </Typography>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={4} lg={6}>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              קוד ביטוח לאומי: {item?.nationalInsuranceCode || '----'}
+            </Typography>
+            {/* תוכן נוסף... */}
+          </Grid>
+          <Grid item xs={12} sm={12} md={8} lg={6}>
+            <Typography variant="body2">
+              <Typography variant="body2">
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    כתובת: {item?.address || '----'}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    קואורדינטות: {item?.coordinates || '----'}
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    תאריך יצירה: {item?.createDate}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    תאריך עדכון אחרון: {item?.inactiveDate || '----'}
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    איש קשר: {item?.contactName || '----'} טלפון: {item?.contactPhoneName || '----'}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    פעיל: {item?.isActive ? 'כן' : 'לא'}
+                  </Grid>
+                </Grid>
+              </Typography>
+            </Typography>
+          </Grid>
+        </Grid>
+        <Typography variant="h6" component="div">
+          מלאי קברים
         </Typography>
         <Typography variant="body2">
           <Grid container>
-            <Grid item xs={4}>
-            כתובת: {cemetery?.address || '----'}
-            </Grid>
-            <Grid item xs={4}>
-            קואורדינטות: {cemetery?.coordinates || '----'}
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={4}>
-            תאריך יצירה: {cemetery?.createDate}
-            </Grid>
-            <Grid item xs={4}>
-            תאריך עדכון אחרון: {cemetery?.inactiveDate || '----'}
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={4}>
-            איש קשר: {cemetery?.contactName || '----'} טלפון: {cemetery?.contactPhoneName || '----'}
-            </Grid>
-            <Grid item xs={4}>
-            פעיל: {cemetery?.isActive ? 'כן' : 'לא'}
-            </Grid>
+            <CemeteryDiv exemption={summaries?.exemption} unusual={summaries?.unusual} closed={summaries?.closed} />
           </Grid>
         </Typography>
-          <Typography variant="h6" component="div">
-            מלאי קברים
-          </Typography>
-          <Typography variant="body2">
-          <Grid container>
-            <CemeteryDiv exemption = {items} unusual = {items} closed = {items}/>
-            </Grid>
-          </Typography>
       </CardContent>
     </Card>
   );

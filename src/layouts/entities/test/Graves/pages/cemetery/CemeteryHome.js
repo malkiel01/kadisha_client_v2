@@ -4,11 +4,13 @@ import { GlobalContext } from '../../../../../../App'
 import useQueries from '../../../../../../database/useQueries'
 import CemeteryTable from './CemeteryTable'
 import { Outlet, useNavigate } from 'react-router-dom';
+import useQuerySummery from '../../../../../../database/filters/summeryGrave';
 
 
 const CemeteryHome = () => {
   const { dataCemeteries } = useContext(GlobalContext)
   const { getBlocksByCemetery } = useQueries()
+  const { getSummaryByCemetery } = useQuerySummery()
 
   const navigate = useNavigate()
 
@@ -17,10 +19,15 @@ const CemeteryHome = () => {
   const onClickRow = (row) => {
     setSelected(row[0])
     if (row) {
-      navigate(`${row[0]?.id}`, {
+      let id = row[0]?.id
+      let item = getBlocksByCemetery(id)
+      let summaries = getSummaryByCemetery(item)
+
+      navigate(`${id}`, {
         state: {
           value: row[0],
-          data: getBlocksByCemetery(row[0]?.id)
+          data: item,
+          summaries: summaries
         }
       })
     }

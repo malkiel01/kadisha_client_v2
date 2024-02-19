@@ -39,7 +39,7 @@ const textStyle = {
 const CemeteryDiv = ({ exemption = [], unusual = [], closed = [] }) => {
   return (
     <>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
             <CustomDiv title={'חלקה פטורה'}>
             {exemption.map((item, index) => (
                 item.type ?
@@ -58,7 +58,7 @@ const CemeteryDiv = ({ exemption = [], unusual = [], closed = [] }) => {
             ))}
             </CustomDiv>    
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
             <CustomDiv title={'חלקה חריגה'}>
             {unusual.map((item, index) => (
                 item.type ?
@@ -77,7 +77,7 @@ const CemeteryDiv = ({ exemption = [], unusual = [], closed = [] }) => {
             ))}
             </CustomDiv>    
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
             <CustomDiv title={'חלקה סגורה'}>
             {closed.map((item, index) => (
                 item.type ?
