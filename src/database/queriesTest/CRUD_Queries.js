@@ -1,9 +1,10 @@
 import axios from "axios"
-     
+  
 // ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * ----- * 
-            
-const QUERY_ADD_CEMETERIES = `http://localhost:3001/api/add-cemeteries` 
-const QUERY_ADD_BLOCKS = `http://localhost:3001/api/blocks/add-blocks` 
+
+const URL = `${process.env.REACT_APP_API_URL}:3001/`
+const QUERY_ADD_CEMETERIES = `${URL}/api/add-cemeteries` 
+const QUERY_ADD_BLOCKS = `${URL}/api/blocks/add-blocks` 
 
 export const AddCemeteries = (data, {token}) => {
     if (data) {
@@ -132,7 +133,7 @@ export const getCemeteryById = (id = null, {token}) => {
     if (id) {
         id = '88'
     }
-    const url = `http://localhost:3001/api/getCemeteryById`; // URL שבו מארח השרת את הפונקציה הרלוונטית בשרת
+    const url = `${URL}/api/getCemeteryById`; // URL שבו מארח השרת את הפונקציה הרלוונטית בשרת
     axios.post(url, 
         {
         params: {
