@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { GlobalContext } from '../../../App'
 import useGeneralQueries from './useGeneralQueries'
 
-const URL = `http://localhost:3001/`
+const URL = `${process.env.REACT_APP_API_URL}:3001/`
 
 const URL_SET = `api/blocks/addBlock`;
 const URL_GET = `api/blocks/getBlocks`;

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { GlobalContext } from '../../../App'
 import useGeneralQueries from './useGeneralQueries'
 
-const URL = `http://localhost:3001/`
+const URL = `${process.env.REACT_APP_API_URL}:3001/`
 
 // איזור בידול
 

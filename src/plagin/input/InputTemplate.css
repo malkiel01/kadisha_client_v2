@@ -1,0 +1,49 @@
+/* .input-container {
+    margin: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input:focus {
+    background-color: #ddd;
+    outline: none;
+} */
+
+.input-container {
+    margin: 1px 10px 1px 10px;
+    position: relative; /* מציב את האלמנט כיחסי לאפשר עיצוב מוחלט לילדים */
+    padding-bottom: 25px; /* מוסיף מרווח תחתון */
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 0px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* עיצוב הודעת השגיאה */
+.error-message {
+    color: red;
+    position: absolute; /* מאפשר להודעת שגיאה להופיע מתחת ל-input בלי להשפיע על הלייאאוט */
+    bottom: -3; /* ממקם את הודעת השגיאה בתחתית האלמנט האב */
+    left: 0; /* מיישר את הודעת השגיאה לשמאל */
+    font-size: 0.9rem; /* הקטנת גודל הפונט אם נדרש */
+}
+

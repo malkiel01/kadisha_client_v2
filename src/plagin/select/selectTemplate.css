@@ -1,0 +1,28 @@
+.select-container {
+    margin: 1px 10px 1px 10px;
+    position: relative; /* מציב את האלמנט כיחסי לאפשר עיצוב מוחלט לילדים */
+    padding-bottom: 25px; /* מוסיף מרווח תחתון */
+}
+
+select {
+    width: 100%; /* רוחב מלא */
+    padding: 8px; /* פדינג לנוחות טיפוגרפית */
+    margin-bottom: 0; /* מרווח תחתון לאחר ה-select */
+    border: 1px solid #ccc; /* גבול בצבע נייטרלי */
+    border-radius: 4px; /* קצוות מעוגלים */
+    box-sizing: border-box; /* הגדרת חישוב גודל הקופסא */
+}
+
+select:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* עיצוב הודעת השגיאה */
+.error-message {
+    color: red;
+    position: absolute; /* מאפשר להודעת שגיאה להופיע מתחת ל-input בלי להשפיע על הלייאאוט */
+    bottom: -3; /* ממקם את הודעת השגיאה בתחתית האלמנט האב */
+    left: 0; /* מיישר את הודעת השגיאה לשמאל */
+    font-size: 0.9rem; /* הקטנת גודל הפונט אם נדרש */
+}
