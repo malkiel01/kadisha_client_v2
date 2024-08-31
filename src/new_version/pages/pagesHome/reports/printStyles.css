@@ -1,0 +1,24 @@
+/* @media print {
+  .print-area {
+    width: 210mm;
+    height: 297mm;
+    padding: 10mm;
+    box-sizing: border-box;
+  }
+
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+  
+  /* Hide the print controls */
+  /* .MuiBox-root {
+    display: none;
+  }
+} */ 
+
+@media print {
+  body {
+    font-family: 'Arial', sans-serif; /* ודא שאתה משתמש בגופן תומך עברית */
+  }
+}

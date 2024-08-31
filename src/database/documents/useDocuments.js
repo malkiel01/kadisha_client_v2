@@ -1,17 +1,13 @@
 import { useContext } from 'react'
 import { GlobalContext } from '../../App'
-import axios from 'axios';
 import { saveAs } from 'file-saver';
-import { AddItem, GetAllItems } from '../queriesTest/CRUD_Queries';
 
-const URL = `http://localhost:3001/`
-
+const URL = `${process.env.REACT_APP_API_URL}:3001/`
 const URL_CREATE_DOCUMENTS = `api/documents`
 
 const useDocuments = () => {
   const { token } = useContext(GlobalContext)
 
-  // Test -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * --
   const GetDocuments = async (url, data, { token },
     isPending = () => { }, getData = () => { }, isError = () => { }
   ) => {
@@ -38,9 +34,8 @@ const useDocuments = () => {
     }
   }
 
-  const createPDFConsular = async (data) => {
-    console.log('step 1');
-    let url = 'http://localhost:3001/api/documents/consular';
+  const createPDF = async (data, document, nameFile) => {
+    let url = `${URL}${URL_CREATE_DOCUMENTS}/${document}`
 
     let isPending = (pending) => {
       console.log(pending ? 'בטעינה...' : 'סיים טעינה');
@@ -50,7 +45,7 @@ const useDocuments = () => {
       // Create a Blob from the PDF Stream
       const file = new Blob([blob], { type: 'application/pdf' });
       // Trigger the file download
-      saveAs(file, 'אישור קונסולרי ' + data[0].content + '.pdf');
+      saveAs(file, nameFile);
     };
 
     let isError = (err) => {
@@ -62,30 +57,8 @@ const useDocuments = () => {
     )
   };
 
-
-  // function sendFormData(fieldsToPlace) {
-  //   const fields = fieldsToPlace
-
-  //   axios.post('http://localhost:3001/api/documents/consular', fields, { responseType: 'blob' })
-  //     .then(response => {
-  //       // Create a Blob from the PDF Stream
-  //       const file = new Blob(
-  //         [response.data],
-  //         { type: 'application/pdf' }
-  //       );
-
-  //       // Trigger the file download using the saveAs function from file-saver
-  //       saveAs(file, 'filled_form.pdf');
-  //     })
-  //     .catch(error => {
-  //       console.error('There was an error!', error);
-  //     });
-  // }
-
-
   return {
-    createPDFConsular,
-    // sendFormData
+    createPDF,
   }
 }
 

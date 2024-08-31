@@ -1,3 +1,17 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@706&family=Open+Sans:ital,wdth,wght@0,80.6,300..800;1,80.6,300..800&display=swap'); */
+
+@font-face {
+  font-family: 'Noto Sans Hebrew';
+  src: url('./../public/fonts/Noto_Sans_Hebrew/NotoSansHebrew-VariableFont_wdth\,wght.ttf') format('truetype');
+  font-weight: 100 900; /* אם אתה משתמש בפונט המשתנה */
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +25,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input {
+  all: unset
+}
+

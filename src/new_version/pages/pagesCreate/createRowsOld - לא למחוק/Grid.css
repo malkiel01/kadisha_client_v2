@@ -1,0 +1,19 @@
+/* .grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(10, 35px);
+  gap: 5px;
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightblue;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.dragging {
+  opacity: 0.5;
+} */

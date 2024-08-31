@@ -1,39 +1,37 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { heIL } from '@mui/material/locale';
+import { heIL } from '@mui/material/locale'
+import RTL from './RTL'; // Make sure the path is correct based on your file structure
+
 
 // lyouts
-import RouterApp from './routing'
+import RouterApp from './new_version/routing'
+import { useIndexedDB } from './database/dataLocal/useIndexedDB';
+import LoadingOverlay from './new_version/pages/pagesMains/LoadingOverlay';
+import NotConnected from './new_version/pages/pagesMains/notConnection';
 
 const GlobalContext = createContext()
 
-const theme = createTheme({
-  bady: {
-    position: 'fixed',
-    height: '100vh', // 100% של גובה המסך (viewport height)
-    width: '100vw',  // 100% של רוחב המסך (viewport width)
-    color: 'green'
-  },
-  typography: {
-    fontSize: 26, // גודל הפונט הכללי של האפליקציה
-  },
-  typographyTitle: {
-    fontSize: '1.5rem',
-    color: '#475569',
-    backgroundColor: '#E2E8F0',
-},
-paragraph: {
-  fontSize: '1.1rem',
-},
-  direction: 'rtl',
-  heIL,
-  
-})
+const theme = createTheme( 
+  {
+    dir: "rtl",
+    typographyTitle: {
+      fontSize: '1.5rem',
+      color: '#475569',
+      backgroundColor: '#E2E8F0',
+    },
+    direction: 'rtl',
+    heIL,
+
+  }
+)
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'))
-  const [permission, setPermission] = useState(localStorage.getItem('permission')) 
-  
+  const db = useIndexedDB('myDatabase', 1, 'myStore');
+
+  const [permission, setPermission] = useState(parseInt(localStorage.getItem('permission') || -1))
+
   const [routerName, setRouterName] = useState([])
 
   const [loading, setLoading] = useState(false)
@@ -41,9 +39,9 @@ function App() {
   // --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** קבלת טפסים
   const NAME_LOCALSTORAGE_COUNTER = 'counterForm'
   const NAME_LOCALSTORAGE_RECORDS_FORM = 'recordsForm'
- 
+
   const [counterForms, setCounterForms] = useState(0)
-  const [formComponents, setFormComponents] = useState([])  
+  const [formComponents, setFormComponents] = useState([])
 
   useEffect(() => {
     let count = localStorage.getItem(NAME_LOCALSTORAGE_COUNTER)
@@ -54,63 +52,86 @@ function App() {
   // --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** קבלת בית עלמין
 
   const [dataCemeteries, setDataCemeteries] = useState([])
-  const [nameCemeteries, setNameCemeteries] = useState([])
-
   const [dataBlocks, setDataBlocks] = useState([])
-  const [nameBlocks, setNameBlocks] = useState([])
-
   const [dataPlots, setDataPlots] = useState([])
-  const [namePlots, setNamePlots] = useState([])
-
   const [dataAreaGraves, setDataAreaGraves] = useState([])
-  const [nameAreaGraves, setNameAreaGraves] = useState([])
+  const [dataGraves, setDataGraves] = useState([])
+  const [dataRows, setDataRows] = useState([])
+
+  const [dataCustomers, setDataCustomers] = useState([])
+  const [dataPurchases, setDataPurchases] = useState([])
+  const [dataBurials, setDataBurials] = useState([])
+  
+  const [dataPayments, setDataPayments] = useState([])
+  const [dataSignatures, setDataSignatures] = useState([])
+
+  const [dataCities, setDataCities] = useState([])
+  const [dataCountries, setDataCountries] = useState([])
+
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+
+
+  const [temp, setTemp] = useState([])
+
+  const [title, setTitle] = useState('בתי עלמין');
 
   useEffect(() => {
-    let dataCemeteries = localStorage.getItem('dataCemeteries')
-    setDataCemeteries(JSON.parse(dataCemeteries) || [])
+    setDataCemeteries(JSON.parse(localStorage.getItem('dataCemeteries')) || [])
+    setDataBlocks(JSON.parse(localStorage.getItem('dataBlocks')) || [])
+    setDataPlots(JSON.parse(localStorage.getItem('dataPlots')) || [])
+    setDataAreaGraves(JSON.parse(localStorage.getItem('dataAreaGraves')) || [])
+    setDataRows(JSON.parse(localStorage.getItem('dataRows')) || [])
 
-    let dataBlocks = localStorage.getItem('dataBlocks')
-    setDataBlocks(JSON.parse(dataBlocks) || [])
-
-    let dataPlots = localStorage.getItem('dataPlots')
-    setDataPlots(JSON.parse(dataPlots) || [])
-
-    let dataAreaGraves = localStorage.getItem('dataAreaGraves')
-    setDataAreaGraves(JSON.parse(dataAreaGraves) || [])
   }, [])
 
   // --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** --- *** 
 
-  // burialGround
+  const varibleGlobal = {
+    db,
+    token, setToken,
+    loading, setLoading,
+    permission, setPermission,
+    counterForms, setCounterForms,
+    formComponents, setFormComponents,
+    routerName, setRouterName,
 
-  const varibleGlobal = { 
-                token, setToken,
-                loading, setLoading,
-                permission, setPermission,
-                counterForms, setCounterForms,
-                formComponents, setFormComponents,
-                routerName, setRouterName,
-                
-                dataCemeteries, setDataCemeteries,
-                nameCemeteries, setNameCemeteries,
+    dataCemeteries, setDataCemeteries,
+    dataBlocks, setDataBlocks,
+    dataPlots, setDataPlots,
+    dataAreaGraves, setDataAreaGraves,
+    dataGraves, setDataGraves,
+    dataRows, setDataRows,
+    dataCustomers, setDataCustomers,
 
-                dataBlocks, setDataBlocks,
-                nameBlocks, setNameBlocks,
+    dataPurchases, setDataPurchases,
+    dataBurials, setDataBurials,
 
-                dataPlots, setDataPlots,
-                namePlots, setNamePlots,
+    dataPayments, setDataPayments,
+    dataSignatures, setDataSignatures,
+    dataCities, setDataCities,
+    dataCountries, setDataCountries,
 
-                dataAreaGraves, setDataAreaGraves,
-                nameAreaGraves, setNameAreaGraves,
-              }
+    breadcrumbs, setBreadcrumbs,
+    title, setTitle,
+
+    temp, setTemp,
+  }
+
+  // setPermission(1)
 
 
   return (
-    <GlobalContext.Provider value={varibleGlobal}>
-      <ThemeProvider theme={theme}>
-          <RouterApp/>
-      </ThemeProvider>
-    </GlobalContext.Provider>
+    <RTL>
+      <GlobalContext.Provider value={varibleGlobal}>
+        <ThemeProvider theme={theme}>
+          {db ?
+          permission !== 10 ?
+          <RouterApp /> 
+          : <NotConnected />
+           : <LoadingOverlay />}
+        </ThemeProvider>
+      </GlobalContext.Provider>
+    </RTL>
   )
 }
 

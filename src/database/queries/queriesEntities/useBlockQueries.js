@@ -1,117 +1,86 @@
-import { useContext } from 'react'
-import { GlobalContext } from '../../../App'
-import useGeneralQueries from './useGeneralQueries'
-
-const URL = `${process.env.REACT_APP_API_URL}:3001/`
-
-const URL_SET = `api/blocks/addBlock`;
-const URL_GET = `api/blocks/getBlocks`;
-const URL_GET_BY_CEMETERY = `api/blocks/getBlocksByCemetery`
-const URL_UPDATE = `api/blocks/updateBlock`;
-const URL_REMOVE = `api/blocks/removeBlock`;
-
-const NAME_DATA = 'dataBlocks'
-const NAME_ENTITY = 'blockNameHe'
+import { useContext } from 'react';
+import useCURD_Queries from '../queryGenerals/useCURD_Queries'
+import { GlobalContext } from '../../../App';
+import { useAddData, useGetData, useGetDataByName, useUpdateData } from '../../dataLocal/indexedDBHooks';
 
 const useBlockQueries = () => {
-  const { token, setLoading, setNameBlocks, dataBlocks ,setDataBlocks } = useContext(GlobalContext)
+  const { setDataBlocks, db } = useContext(GlobalContext)
+  const { AllDataEntities, addOrUpdateDataEntity, removeEntity } = useCURD_Queries()
 
-  const setNameEntities = (filterName) => {
-    setNameBlocks(filterName)
-  }
+  const addData = useAddData(db, 'myStore');
+  const updateData = useUpdateData(db, 'myStore');
+  const getData = useGetData(db, 'myStore');
+  const getDataByName = useGetDataByName(db, 'myStore');
 
-  const setDataEntities = (response) => {
-    setDataBlocks(response)
-  }
+  const AllDataBlocks = async () => {
+    try {
+      let query = `api/blocks/getBlocks`
+      let url = `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/${query}`
+      let nameEntity = 'dataBlocks'
 
-  const { extractAndSaveData, AllData, GetAllItems, AddItem, RemoveItem } = useGeneralQueries();
+      const data = await AllDataEntities(url); // המתנה לתוצאה
 
-  // Block -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * -- * --
-
-  // קבלת כל הגושים
-  const AllDataEntities = () => {
-    let url = URL + URL_GET
-    let isError = (err) => {
-      if (err) {
-        console.log('שגיאה: ', err);
+      setDataBlocks(data?.resData || [])
+      localStorage.setItem(nameEntity, JSON.stringify(data?.resData || []))
+      if (db) {
+        getDataByName(nameEntity)
+          .then((existingData) => {
+            if (existingData.length > 0) {
+              // אם הנתונים קיימים, עדכן אותם
+              updateData({ id: 2, name: nameEntity, value: data?.resData || [] })
+                .then(() => getDataByName(nameEntity))
+                .then((data) => {
+                  // console.log('Updated Data:', data);
+                })
+                .catch((error) => console.error('Error updating data:', error));
+            } else {
+              // אם הנתונים לא קיימים, הוסף אותם
+              addData({ id: 2, name: nameEntity, value: data?.resData || [] })
+                .then(() => getDataByName(nameEntity))
+                .then((data) => {
+                  // console.log('Added Data:', data);
+                })
+                .catch((error) => console.error('Error adding data:', error));
+            }
+          })
+          .catch((error) => console.error('Error getting data by name:', error));
       }
-    }
-    let isPending = (pending) => {
-      ((localStorage.getItem(NAME_DATA) === null) || !pending) && setLoading(pending)
-      console.log(pending ? 'בטעינה...' : 'סיים טעינה');
 
+    } catch (error) {
+      console.error("שגיאה בטעינת נתונים: ", error);
     }
-    let getData = (response) => {
-      localStorage.setItem(NAME_DATA, JSON.stringify(response))
-      setDataEntities(response)
-
-      console.log(response);
-      let filterName = extractAndSaveData(NAME_ENTITY, response)
-      localStorage.setItem(NAME_DATA, JSON.stringify(filterName))
-      setNameEntities(filterName)
-
-    }
-    GetAllItems(url, { token },
-      isPending,
-      getData, isError
-    )
   }
 
-  // הוספת גוש
-  const addOrUpdateDataEntity = (data) => {
-    let url = null
-
-    if (data?.id) {
-      url = URL + URL_UPDATE
-    } else {
-      url = URL + URL_SET
-    }
-    let isErorr = (err) => {
-      if (err) {
-        console.log('שגיאה: ', err);
+  const addOrUpdateDataBlock = async (data) => {
+    let create = `api/blocks/addBlock`
+    let update = `api/blocks/updateBlock`
+    let url = `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/${(data?.id) ? update : create}`
+    try {
+      let res = await addOrUpdateDataEntity(data, url);
+      if (res) {
+        await AllDataBlocks()
+        console.log('התוצאה הצליחה...')
+        return res
+      } else {
+        return false
       }
+    } catch (error) {
+      console.error('שגיאה בתהליך העדכון/הוספה:', error);
+      return false
     }
-    let isPending = (pending) => {
-      !pending && AllDataEntities(url)
-      console.log(pending ? 'בטעינה...' : 'סיים טעינה')
-    }
-
-    AddItem(url, data, { token },
-      isPending, isErorr
-    )
   }
 
-  // מחיקת בית עלמין
-  const removeEntity = (id) => {
-    let url = URL + URL_REMOVE
-
-    let isErorr = (err) => {
-      if (err) {
-        console.log('שגיאה: ', err);
-      }
-    }
-    let isPending = (pending) => {
-      !pending && AllDataEntities()
-      console.log(pending ? 'בטעינה...' : 'סיים טעינה')
-    }
-
-    RemoveItem(url, id, { token }, isPending, isErorr)
+  const removeBlock = (id) => {
+    let query = `api/blocks/removeBlock`
+    let url = `${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/${query}`
+    removeEntity(id, url)
   }
 
-  const getChildrensByFather = (id) => {
-    console.log(102, id, dataBlocks, dataBlocks.length);
-    if (dataBlocks.length) {
-      return dataBlocks.filter(item => item?.cemeteryId === id);
-    }
-    return [];
+  return {
+    AllDataBlocks,
+    addOrUpdateDataBlock,
+    removeBlock
   }
-
-
-  return { AllDataBlocks: AllDataEntities, 
-          addOrUpdateDataBlock: addOrUpdateDataEntity, 
-          removeBlock: removeEntity,
-          getBlocksByCemetery: getChildrensByFather
-        }
 };
 
 export default useBlockQueries;
